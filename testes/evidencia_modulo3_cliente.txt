@@ -1,7 +1,7 @@
 === 1. Teste de acesso NAO AUTORIZADO (sem token) ===
 HTTP/1.1 401 Unauthorized
 Server: nginx/1.31.10
-Date: Tue, 24 Nov 2026 16:55:24 GMT
+Date: Tue, 24 Nov 2026 16:57:44 GMT
 Content-Type: application/json
 Content-Length: 57
 Connection: keep-alive
@@ -11,7 +11,7 @@ Connection: keep-alive
 === 2. Teste de LOGIN INVALIDO (senha errada) ===
 HTTP/1.1 401 Unauthorized
 Server: nginx/1.31.10
-Date: Tue, 24 Nov 2026 16:55:25 GMT
+Date: Tue, 24 Nov 2026 16:57:44 GMT
 Content-Type: application/json
 Content-Length: 35
 Connection: keep-alive
@@ -23,13 +23,13 @@ Connection: keep-alive
   "status": "autenticado",
   "usuario": "admin",
   "token_type": "Bearer",
-  "access_token": "73e587f73ba3e3dc0e4bc2936beea82326365a4217cdbe8d"
+  "access_token": "f65dea1a6cbf58c4809e035cbc8aa218f18014253245772b"
 }
 
 === 4. Teste de acesso AUTORIZADO na area protegida ===
 HTTP/1.1 200 OK
 Server: nginx/1.31.10
-Date: Tue, 24 Nov 2026 16:55:25 GMT
+Date: Tue, 24 Nov 2026 16:57:44 GMT
 Content-Type: application/json
 Content-Length: 120
 Connection: keep-alive
@@ -47,7 +47,7 @@ Connection: keep-alive
 === 6. Verificando integridade ANTES da alteracao (deve retornar 200 OK) ===
 HTTP/1.1 200 OK
 Server: nginx/1.31.10
-Date: Tue, 24 Nov 2026 16:55:25 GMT
+Date: Tue, 24 Nov 2026 16:57:44 GMT
 Content-Type: application/json
 Content-Length: 206
 Connection: keep-alive
@@ -57,7 +57,7 @@ Connection: keep-alive
 === 7. Verificando integridade DEPOIS de alterar a mensagem (deve retornar 400) ===
 HTTP/1.1 400 Bad Request
 Server: nginx/1.31.10
-Date: Tue, 24 Nov 2026 16:55:25 GMT
+Date: Tue, 24 Nov 2026 16:57:44 GMT
 Content-Type: application/json
 Content-Length: 262
 Connection: keep-alive

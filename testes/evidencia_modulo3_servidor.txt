@@ -1,15 +1,18 @@
-INFO:     172.21.0.10:33942 - "GET / HTTP/1.1" 200 OK
-INFO:     172.21.0.10:33946 - "GET /protegido HTTP/1.1" 401 Unauthorized
-INFO:     172.21.0.10:33956 - "POST /login HTTP/1.1" 401 Unauthorized
-INFO:     172.21.0.10:33966 - "POST /login HTTP/1.1" 200 OK
-INFO:     172.21.0.10:33982 - "GET /protegido HTTP/1.1" 200 OK
-INFO:     172.21.0.10:33998 - "POST /mensagem/assinar HTTP/1.1" 200 OK
-INFO:     172.21.0.10:34000 - "POST /mensagem/verificar HTTP/1.1" 200 OK
-INFO:     172.21.0.10:34012 - "POST /mensagem/verificar HTTP/1.1" 400 Bad Request
-INFO:     172.21.0.10:55416 - "GET /protegido HTTP/1.1" 401 Unauthorized
-INFO:     172.21.0.10:55432 - "POST /login HTTP/1.1" 401 Unauthorized
-INFO:     172.21.0.10:55448 - "POST /login HTTP/1.1" 200 OK
-INFO:     172.21.0.10:55462 - "GET /protegido HTTP/1.1" 200 OK
-INFO:     172.21.0.10:55474 - "POST /mensagem/assinar HTTP/1.1" 200 OK
-INFO:     172.21.0.10:55488 - "POST /mensagem/verificar HTTP/1.1" 200 OK
-INFO:     172.21.0.10:55504 - "POST /mensagem/verificar HTTP/1.1" 400 Bad Request
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-11-24 16:57:44,331 [WARNING] [AUTH FALHA] Acesso negado: cabecalho Authorization ausente ou invalido.
+INFO:     172.21.0.10:40276 - "GET /protegido HTTP/1.1" 401 Unauthorized
+2026-11-24 16:57:44,353 [WARNING] [LOGIN FALHA] Senha incorreta para usuario 'admin'.
+INFO:     172.21.0.10:40278 - "POST /login HTTP/1.1" 401 Unauthorized
+2026-11-24 16:57:44,371 [INFO] [LOGIN SUCESSO] Usuario 'admin' autenticado.
+INFO:     172.21.0.10:40294 - "POST /login HTTP/1.1" 200 OK
+2026-11-24 16:57:44,383 [INFO] [AUTH SUCESSO] Usuario 'admin' acessou a area protegida.
+INFO:     172.21.0.10:40298 - "GET /protegido HTTP/1.1" 200 OK
+2026-11-24 16:57:44,389 [INFO] [HMAC GERADO] Usuario 'admin' assinou mensagem (50 bytes).
+INFO:     172.21.0.10:40308 - "POST /mensagem/assinar HTTP/1.1" 200 OK
+2026-11-24 16:57:44,407 [INFO] [HMAC OK] Integridade confirmada para mensagem enviada por 'admin'.
+INFO:     172.21.0.10:40318 - "POST /mensagem/verificar HTTP/1.1" 200 OK
+2026-11-24 16:57:44,415 [WARNING] [HMAC FALHA] ADULTERACAO DETECTADA! Mensagem='Autorizar pagamento de R$ 50000,00 para fornecedor X' | Recebido=a29b72d80071d57e... | Esperado=138a4f5b462bf090...
+INFO:     172.21.0.10:40330 - "POST /mensagem/verificar HTTP/1.1" 400 Bad Request
