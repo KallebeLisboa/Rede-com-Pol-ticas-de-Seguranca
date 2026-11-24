@@ -1,0 +1,66 @@
+=== 1. Teste de acesso NAO AUTORIZADO (sem token) ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.31.10
+Date: Tue, 24 Nov 2026 16:55:24 GMT
+Content-Type: application/json
+Content-Length: 57
+Connection: keep-alive
+
+{"detail":"Token de autenticacao ausente ou malformado."}
+
+=== 2. Teste de LOGIN INVALIDO (senha errada) ===
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.31.10
+Date: Tue, 24 Nov 2026 16:55:25 GMT
+Content-Type: application/json
+Content-Length: 35
+Connection: keep-alive
+
+{"detail":"Credenciais invalidas."}
+
+=== 3. Teste de LOGIN VALIDO ===
+{
+  "status": "autenticado",
+  "usuario": "admin",
+  "token_type": "Bearer",
+  "access_token": "73e587f73ba3e3dc0e4bc2936beea82326365a4217cdbe8d"
+}
+
+=== 4. Teste de acesso AUTORIZADO na area protegida ===
+HTTP/1.1 200 OK
+Server: nginx/1.31.10
+Date: Tue, 24 Nov 2026 16:55:25 GMT
+Content-Type: application/json
+Content-Length: 120
+Connection: keep-alive
+
+{"status":"acesso_autorizado","usuario":"admin","dados_confidenciais":"Relatorio Financeiro Interno - Acesso Restrito."}
+
+=== 5. Gerando HMAC-SHA256 da mensagem original ===
+{
+  "usuario": "admin",
+  "algoritmo": "HMAC-SHA256",
+  "mensagem": "Autorizar pagamento de R$ 500,00 para fornecedor X",
+  "hmac": "a29b72d80071d57e2ae40df4662476d18d630e80349e5079eed7ffa290bd63ae"
+}
+
+=== 6. Verificando integridade ANTES da alteracao (deve retornar 200 OK) ===
+HTTP/1.1 200 OK
+Server: nginx/1.31.10
+Date: Tue, 24 Nov 2026 16:55:25 GMT
+Content-Type: application/json
+Content-Length: 206
+Connection: keep-alive
+
+{"integra":true,"status":"Mensagem integra e autentica.","mensagem":"Autorizar pagamento de R$ 500,00 para fornecedor X","hmac_verificado":"a29b72d80071d57e2ae40df4662476d18d630e80349e5079eed7ffa290bd63ae"}
+
+=== 7. Verificando integridade DEPOIS de alterar a mensagem (deve retornar 400) ===
+HTTP/1.1 400 Bad Request
+Server: nginx/1.31.10
+Date: Tue, 24 Nov 2026 16:55:25 GMT
+Content-Type: application/json
+Content-Length: 262
+Connection: keep-alive
+
+{"detail":{"integra":false,"status":"FALHA DE INTEGRIDADE: a mensagem ou o HMAC foi alterado.","hmac_esperado":"138a4f5b462bf090f59447708c5f9ad96bcc109a1e01d3f8805c59247eedb0b0","hmac_recebido":"a29b72d80071d57e2ae40df4662476d18d630e80349e5079eed7ffa290bd63ae"}}
+
