@@ -15,10 +15,10 @@
 # embutido do Docker (127.0.0.11) e nao deve ser apagada.
 # =============================================================================
 
-REDE_CLIENTES="172.20.0.0/24"
-REDE_SERVIDORES="172.21.0.0/24"
-SERVIDOR_WEB="172.21.0.10"
-APP_PYTHON="172.21.0.20"
+REDE_CLIENTES="172.30.0.0/24"
+REDE_SERVIDORES="172.31.0.0/24"
+SERVIDOR_WEB="172.31.0.10"
+APP_PYTHON="172.31.0.20"
 NFLOG_GRUPO=1
 
 # Registra (com limite de taxa) e descarta.

@@ -1,5 +1,5 @@
 #!/bin/sh
-echo "[GATEWAY] Roteamento ativo entre 172.20.0.0/24 e 172.21.0.0/24."
+echo "[GATEWAY] Roteamento ativo entre 172.30.0.0/24 e 172.31.0.0/24."
 
 # Coletor de logs do firewall (NFLOG -> /var/log/firewall/firewall.log)
 mkdir -p /var/log/firewall

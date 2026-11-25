@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-URL="http://172.21.0.10"
+URL="http://172.31.0.10"
 
 echo "=== 1. Teste de acesso NAO AUTORIZADO (sem token) ==="
 curl -s -i "$URL/protegido"
