@@ -19,10 +19,10 @@ cd "$(dirname "$0")/.." || exit 1
 SAIDA="testes/evidencia_modulo4.txt"
 exec > >(tee "$SAIDA") 2>&1
 
-SERVIDOR_WEB=172.21.0.10
-APP=172.21.0.20
-GATEWAY=172.20.0.2
-CLIENTE=172.20.0.10
+SERVIDOR_WEB=172.31.0.10
+APP=172.31.0.20
+GATEWAY=172.30.0.2
+CLIENTE=172.30.0.10
 PORTA_REVERSA=4444
 FALHAS=0
 
@@ -86,7 +86,7 @@ sleep 1
 titulo "FASE 1: SEM FIREWALL (cenario nao protegido)"
 docker exec gateway sh /firewall.sh limpar
 #         http  https     ping      api8000  ssh22     mysql     gw22      reverso
-bateria   200   RECUSADA  RESPONDE  ABERTA   RECUSADA  RECUSADA  RECUSADA  ABERTA
+bateria   200   ABERTA    RESPONDE  ABERTA   RECUSADA  RECUSADA  RECUSADA  ABERTA
 
 # ----------------------------------------------------------------------------
 titulo "FASE 2: COM FIREWALL (politica aplicada)"
@@ -94,11 +94,11 @@ docker exec gateway sh /firewall.sh aplicar
 LINHAS_LOG=$(docker exec gateway sh -c 'wc -l < /var/log/firewall/firewall.log')
 
 docker exec -d gateway tcpdump -i any -nn -U -w /capturas/modulo4_firewall.pcap \
-    "net 172.20.0.0/24 or net 172.21.0.0/24"
+    "net 172.30.0.0/24 or net 172.31.0.0/24"
 sleep 2
 
 #         http  https     ping      api8000    ssh22      mysql      gw22       reverso
-bateria   200   RECUSADA  RESPONDE  BLOQUEADA  BLOQUEADA  BLOQUEADA  BLOQUEADA  BLOQUEADA
+bateria   200   ABERTA    RESPONDE  BLOQUEADA  BLOQUEADA  BLOQUEADA  BLOQUEADA  BLOQUEADA
 
 TOKEN=$(docker exec cliente curl -s -m 3 -X POST http://$SERVIDOR_WEB/login \
     -H "Content-Type: application/json" \
@@ -109,8 +109,8 @@ verifica "Login do Modulo 3 via proxy continua funcionando" 200 "$OBTIDO"
 sleep 1
 docker exec gateway pkill tcpdump
 echo
-echo "Observacao: HTTPS :443 e liberado pelo firewall; RECUSADA significa que o"
-echo "Nginx ainda nao escuta na 443 (certificados do Modulo 2), nao um bloqueio."
+echo "Observacao: HTTPS :443 e liberado pelo firewall e o Nginx escuta nela desde o"
+echo "Modulo 2 (TLS), por isso o resultado esperado e ABERTA nas duas fases."
 
 # ----------------------------------------------------------------------------
 titulo "FASE 3: EVIDENCIAS"

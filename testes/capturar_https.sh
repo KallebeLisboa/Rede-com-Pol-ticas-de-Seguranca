@@ -4,7 +4,7 @@ set -e
 PCAP_CONTAINER="/capturas/modulo2_https.pcap"
 PCAP_HOST="capturas/modulo2_https.pcap"
 EVIDENCIA_TXT="testes/evidencia_modulo2_comparacao.txt"
-URL="https://172.21.0.10"
+URL="https://172.31.0.10"
 
 CA_ARG="-k"
 if [ -f "nginx/certs/ca.crt" ]; then
@@ -12,7 +12,7 @@ if [ -f "nginx/certs/ca.crt" ]; then
 fi
 
 echo "=== [MODULO 2] Iniciando captura HTTPS (porta 443) no gateway ==="
-docker exec -d gateway tcpdump -i any -U -s 0 -w "$PCAP_CONTAINER" "host 172.21.0.10 and port 443"
+docker exec -d gateway tcpdump -i any -U -s 0 -w "$PCAP_CONTAINER" "host 172.31.0.10 and port 443"
 sleep 1
 
 echo "=== [MODULO 2] Gerando trafego HTTPS cifrado a partir do cliente ==="

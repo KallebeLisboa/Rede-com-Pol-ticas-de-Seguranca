@@ -1,0 +1,29 @@
+============================================================
+EVIDENCIA MODULO 2 - VERIFICACAO DE TRAFEGO HTTPS (CIFRADO)
+Arquivo PCAP: capturas/modulo2_https.pcap
+============================================================
+
+--- Busca por dados sensiveis em texto claro no PCAP (deve ser vazia) ---
+[OK] Nenhum dado sensivel encontrado em texto claro na captura TLS.
+
+--- Primeiros pacotes TLS capturados ---
+21:03:19.938025 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [S], seq 2904195813, win 64240, options [mss 1460,sackOK,TS val 2482851671 ecr 0,nop,wscale 10], length 0
+21:03:19.938042 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [S], seq 2904195813, win 64240, options [mss 1460,sackOK,TS val 2482851671 ecr 0,nop,wscale 10], length 0
+21:03:19.938070 eth1  In  IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [S.], seq 2178689609, ack 2904195814, win 65160, options [mss 1460,sackOK,TS val 280579519 ecr 2482851671,nop,wscale 10], length 0
+21:03:19.938075 eth0  Out IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [S.], seq 2178689609, ack 2904195814, win 65160, options [mss 1460,sackOK,TS val 280579519 ecr 2482851671,nop,wscale 10], length 0
+21:03:19.938097 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [.], ack 1, win 63, options [nop,nop,TS val 2482851671 ecr 280579519], length 0
+21:03:19.938101 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [.], ack 1, win 63, options [nop,nop,TS val 2482851671 ecr 280579519], length 0
+21:03:19.940946 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 1:518, ack 1, win 63, options [nop,nop,TS val 2482851674 ecr 280579519], length 517
+21:03:19.940954 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 1:518, ack 1, win 63, options [nop,nop,TS val 2482851674 ecr 280579519], length 517
+21:03:19.940973 eth1  In  IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [.], ack 518, win 64, options [nop,nop,TS val 280579522 ecr 2482851674], length 0
+21:03:19.940977 eth0  Out IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [.], ack 518, win 64, options [nop,nop,TS val 280579522 ecr 2482851674], length 0
+21:03:19.943484 eth1  In  IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [P.], seq 1:1712, ack 518, win 64, options [nop,nop,TS val 280579524 ecr 2482851674], length 1711
+21:03:19.943492 eth0  Out IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [P.], seq 1:1712, ack 518, win 64, options [nop,nop,TS val 280579524 ecr 2482851674], length 1711
+21:03:19.943511 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [.], ack 1712, win 67, options [nop,nop,TS val 2482851676 ecr 280579524], length 0
+21:03:19.943515 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [.], ack 1712, win 67, options [nop,nop,TS val 2482851676 ecr 280579524], length 0
+21:03:19.944647 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 518:598, ack 1712, win 67, options [nop,nop,TS val 2482851677 ecr 280579524], length 80
+21:03:19.944656 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 518:598, ack 1712, win 67, options [nop,nop,TS val 2482851677 ecr 280579524], length 80
+21:03:19.944865 eth0  In  IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 598:797, ack 1712, win 67, options [nop,nop,TS val 2482851678 ecr 280579524], length 199
+21:03:19.944871 eth1  Out IP 172.30.0.10.52214 > 172.31.0.10.443: Flags [P.], seq 598:797, ack 1712, win 67, options [nop,nop,TS val 2482851678 ecr 280579524], length 199
+21:03:19.944913 eth1  In  IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [P.], seq 1712:1999, ack 797, win 64, options [nop,nop,TS val 280579526 ecr 2482851677], length 287
+21:03:19.944919 eth0  Out IP 172.31.0.10.443 > 172.30.0.10.52214: Flags [P.], seq 1712:1999, ack 797, win 64, options [nop,nop,TS val 280579526 ecr 2482851677], length 287

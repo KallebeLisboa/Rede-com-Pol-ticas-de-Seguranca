@@ -1,2 +1,6 @@
 logs/*.log
 testes/evidencia_modulo4.txt
+
+# Chaves privadas e CSRs (Modulo 2) nao vao para o repositorio
+nginx/certs/*.key
+nginx/certs/*.csr

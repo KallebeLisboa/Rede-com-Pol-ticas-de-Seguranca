@@ -4,10 +4,10 @@ set -e
 PCAP_CONTAINER="/capturas/modulo1_http.pcap"
 PCAP_HOST="capturas/modulo1_http.pcap"
 EVIDENCIA_TXT="testes/evidencia_modulo1_analise.txt"
-URL="http://172.21.0.10"
+URL="http://172.31.0.10"
 
 echo "=== [MODULO 1] Iniciando captura HTTP (porta 80) no gateway ==="
-docker exec -d gateway tcpdump -i any -U -s 0 -w "$PCAP_CONTAINER" "host 172.21.0.10 and port 80"
+docker exec -d gateway tcpdump -i any -U -s 0 -w "$PCAP_CONTAINER" "host 172.31.0.10 and port 80"
 sleep 1
 
 echo "=== [MODULO 1] Gerando trafego HTTP em texto claro a partir do cliente ==="

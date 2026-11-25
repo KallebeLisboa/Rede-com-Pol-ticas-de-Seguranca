@@ -1,0 +1,91 @@
+Modulo 2 - Servidor Web, Criptografia e HTTPS/TLS
+Data: 25/11/2026 18:03:37
+
+==================== PRE-CONDICOES ====================
+--- Validacao da cadeia no host ---
+nginx/certs/server.crt: OK
+--- Configuracao do Nginx ---
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+==================== TESTE 1: curl --cacert (validacao da cadeia pela CA do laboratorio) ====================
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / x25519 / RSASSA-PSS
+*  subject: CN=servidor.local
+*  issuer: CN=CA Laboratorio CIC0201
+*  SSL certificate verify ok.
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+HTTP_CODE=200
+[OK  ] Handshake TLS concluido e certificado verificado
+[OK  ] API respondeu 200 por HTTPS
+
+==================== TESTE 2: curl SEM --cacert (a CA nao e confiavel: deve falhar) ====================
+*  CAfile: /etc/ssl/cert.pem
+*  CApath: /etc/ssl/certs
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+* SSL certificate problem: unable to get local issuer certificate
+[OK  ] Conexao rejeitada por falta de CA confiavel
+
+==================== TESTE 3: curl -k (sem validacao, apenas para contraste) ====================
+Codigo HTTP com -k: 200 (a conexao e cifrada, mas sem garantia de identidade)
+[OK  ] curl -k conecta sem validar o certificado
+
+==================== TESTE 4: openssl s_client (protocolo, cipher suite, cadeia e SAN) ====================
+ 0 s:CN=servidor.local
+   i:CN=CA Laboratorio CIC0201
+subject=CN=servidor.local
+issuer=CN=CA Laboratorio CIC0201
+Verification: OK
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Verify return code: 0 (ok)
+
+--- Certificado do servidor (SAN, validade, restricoes) ---
+subject=CN=servidor.local
+issuer=CN=CA Laboratorio CIC0201
+notBefore=Nov 25 21:02:48 2026 GMT
+notAfter=Nov 25 21:02:48 2027 GMT
+X509v3 Subject Alternative Name: 
+    DNS:servidor.local, IP Address:172.31.0.10
+X509v3 Basic Constraints: 
+    CA:FALSE
+X509v3 Key Usage: 
+    Digital Signature, Key Encipherment
+X509v3 Extended Key Usage: 
+    TLS Web Server Authentication
+[OK  ] Verify return code: 0 (ok)
+[OK  ] Protocolo negociado e TLSv1.3 ou TLSv1.2
+[OK  ] SAN contem o IP 172.31.0.10 e DNS servidor.local
+
+==================== TESTE 5: versoes antigas de TLS (devem ser recusadas) ====================
+--- curl --tlsv1.1 --tls-max 1.1 ---
+* TLSv1.3 (OUT), TLS alert, protocol version (582):
+* TLS connect error: error:0A0000BF:SSL routines::no protocols available
+[OK  ] TLS 1.1 recusado pelo servidor (sem resposta HTTP)
+--- openssl s_client -tls1_1 (SECLEVEL=0 para o cliente aceitar oferecer TLS 1.1) ---
+282B9C557B730000:error:0A00042E:SSL routines:ssl3_read_bytes:tlsv1 alert protocol version:ssl/record/rec_layer_s3.c:914:SSL alert number 70
+    Protocol  : TLSv1.1
+[OK  ] Servidor enviou alerta 'protocol version' ao ClientHello TLS 1.1
+--- curl --tlsv1.2 --tls-max 1.2 (deve funcionar) ---
+[OK  ] TLS 1.2 aceito (codigo 200)
+
+==================== TESTE 6: aplicacao sob TLS (POST /login e GET /protegido) ====================
+Token JWT obtido: 9298242136eae15c27ffca42193e3e...
+[OK  ] POST /login via HTTPS retornou access_token
+{"status":"acesso_autorizado","usuario":"admin","dados_confidenciais":"Relatorio Financeiro Interno - Acesso Restrito."}
+[OK  ] GET /protegido com token via HTTPS (codigo 200)
+[OK  ] GET /protegido sem token e negado (codigo 401)
+
+==================== TESTE 7: HTTP :80 permanece disponivel (Modulo 1 depende dele) ====================
+[OK  ] HTTP :80 sem redirecionamento (codigo 200)
+
+==================== RESULTADO ====================
+Todos os testes do Modulo 2 passaram.
+Evidencia salva em testes/evidencia_modulo2_tls.txt

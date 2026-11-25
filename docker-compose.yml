@@ -11,9 +11,9 @@ services:
       - ./logs:/var/log/firewall
     networks:
       rede_clientes:
-        ipv4_address: 172.20.0.2
+        ipv4_address: 172.30.0.2
       rede_servidores:
-        ipv4_address: 172.21.0.2
+        ipv4_address: 172.31.0.2
 
   cliente:
     build: ./cliente
@@ -25,9 +25,10 @@ services:
     volumes:
       - ./capturas:/capturas
       - ./testes:/testes
+      - ./nginx/certs:/certs:ro
     networks:
       rede_clientes:
-        ipv4_address: 172.20.0.10
+        ipv4_address: 172.30.0.10
 
   servidor_web:
     build: ./nginx
@@ -42,7 +43,7 @@ services:
       - ./nginx/certs:/etc/nginx/certs:ro
     networks:
       rede_servidores:
-        ipv4_address: 172.21.0.10
+        ipv4_address: 172.31.0.10
 
   app_python:
     build: ./app
@@ -53,7 +54,7 @@ services:
       - gateway
     networks:
       rede_servidores:
-        ipv4_address: 172.21.0.20
+        ipv4_address: 172.31.0.20
 
 networks:
   rede_clientes:
@@ -61,10 +62,10 @@ networks:
     internal: true
     ipam:
       config:
-        - subnet: 172.20.0.0/24
+        - subnet: 172.30.0.0/24
   rede_servidores:
     driver: bridge
     internal: true
     ipam:
       config:
-        - subnet: 172.21.0.0/24
+        - subnet: 172.31.0.0/24
